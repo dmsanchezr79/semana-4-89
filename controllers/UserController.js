@@ -36,7 +36,7 @@ module.exports = {
 
     register: async (req, res, next) => {
         try {
-            req.body.password = bcrypt.hashSync(req.body.password, 10);
+            req.body.password = bcrypt.hashSync(req.body.password, 8);
             const user = await db.Usuario.create(req.body);
             res.status(200).json(user);
         } catch (error) {
