@@ -45,8 +45,8 @@ module.exports = {
             const { id } = jwt.verify(token, 'config.secret.final');
             const user = db.Usuario.findOne({
                 where: { 
-                    id: id,
-                    estado: 1
+                    id: id //,
+                    // estado: 1
                 }
             });
             if (user) {
