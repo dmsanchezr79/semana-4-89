@@ -5,9 +5,9 @@ module.exports = {
     list: async (req, res, next) => { 
         try {
             const user = await db.Categoria.findAll({
-                where: {
-                    estado: 1
-                }
+                // where: {
+                //     estado: 1
+                // }
             });
             res.status(200).json(user);
         } catch (error) {

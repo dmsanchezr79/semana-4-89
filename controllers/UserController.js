@@ -59,4 +59,78 @@ module.exports = {
         }
     },
 
+    update: async (req, res, next) => {
+        try {
+            const usuarioNew = await db.Usuario.findOne({
+                where: {
+                    id: req.body.id
+                }
+            });
+
+            if (usuarioNew) {
+                // Actualizar campos
+                usuarioNew.nombre = req.body.nombre;
+                usuarioNew.email = req.body.email;
+                usuarioNew.estado = req.body.estado;
+                usuarioNew.rol = req.body.rol;
+                usuarioNew.password = bcrypt.hashSync(req.body.password, 8);
+                await usuarioNew.save();
+                res.status(200).json(usuarioNew);
+            } else {
+                res.status(404).send('Usuario not found'); 
+            }
+        } catch (error) {
+            res.status(500).send({
+                message: 'Error al actualizar usuario: ' + error
+            });
+            next(error);
+        }
+    },
+    activate: async (req, res, next) => {
+        try {
+            const userNew = await db.Usuario.findOne({
+                where: {
+                    id: req.body.id
+                }
+            });
+
+            if (userNew) {
+                // Actualizar campos
+                userNew.estado = 1;
+                await userNew.save();
+                res.status(200).json(userNew);
+            } else {
+                res.status(404).send('User not found'); 
+            }
+        } catch (error) {
+            res.status(500).send({
+                message: 'Error al actualizar usuario: ' + error
+            });
+            next(error);
+        }
+    },
+    deactivate: async (req, res, next) => {
+        try {
+            const userNew = await db.Usuario.findOne({
+                where: {
+                    id: req.body.id
+                }
+            });
+
+            if (userNew) {
+                // Actualizar campos
+                userNew.estado = 0;
+                await userNew.save();
+                res.status(200).json(userNew);
+            } else {
+                res.status(404).send('User not found'); 
+            }
+        } catch (error) {
+            res.status(500).send({
+                message: 'Error al actualizar usuario: ' + error
+            });
+            next(error);
+        }
+    },
+
 }

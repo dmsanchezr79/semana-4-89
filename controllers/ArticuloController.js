@@ -5,9 +5,10 @@ module.exports = {
     list: async (req, res, next) => { 
         try {
             const user = await db.Articulo.findAll({
-                where: {
-                    estado: 1
-                }
+                // where: {
+                //     estado: 1
+                // },
+                include: 'categoria'
             });
             res.status(200).json(user);
         } catch (error) {
@@ -42,6 +43,7 @@ module.exports = {
                 articuloNew.nombre = req.body.nombre;
                 articuloNew.descripcion = req.body.descripcion;
                 articuloNew.codigo = req.body.codigo;
+                articuloNew.categoriaId = req.body.categoriaId;
                 await articuloNew.save();
                 res.status(200).json(articuloNew);
             } else {
